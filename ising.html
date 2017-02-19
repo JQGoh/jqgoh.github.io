@@ -1,0 +1,311 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Ising Model</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body class="single">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<h1><a href="index.html#about">Jing Qiang Goh</a></h1>
+						<nav class="links">
+							<ul>
+								<li><a href="index.html#datasci">Data Science</a></li>
+								<li><a href="index.html#simulate">Simulation</a></li>
+								<li><a href="index.html#code">Coding</a></li>
+								<li><a href="index.html#interest">Interest</a></li>
+							</ul>
+						</nav>
+						<nav class="main">
+							<ul>
+								<li class="menu">
+									<a class="fa-bars" href="#menu">Menu</a>
+								</li>
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<section id="menu">
+
+						<!-- Links -->
+							<section>
+								<ul class="links">
+									<h1><a href="index.html">Home</a></h1>
+									<li>
+										<h1><a href="index.html#datasci"><u>Data Science</u></a></h1>
+									        <ul>
+									        <li>
+											<h3><a href="keywords.html">String Patterns with Keywords</a></h3>
+									        </li>
+										<li>
+											<h3><a href="one2one-features.html">Features with One-to-one Correspondence</a></h3>
+										</li>
+									        <li>
+											<h3><a href="missing-data.html#post6">Dealing with Missing Data</a></h3>
+										</li>
+									        <li>
+											<h3><a href="summary-of-data.html">Summary of Data</a></h3>
+										</li>
+									        </ul>
+									</li>
+									<li>
+										<h1><a href="index.html#simulate"><u>Simulation</u></a></h1>
+										<ul>
+										<li>
+											<h3><a href="ising.html">Ising Model</a></h3>
+										</li>
+										</ul>
+									</li>
+									<li>
+										<h1><a href="index.html#code"><u>Coding</u></a></h1>
+										<ul>
+										<li>
+											<h3><a href="ligand.html">Ligand On a Cluster</a></h3>
+										</li>
+										</ul>
+									</li>
+									<li>
+										<h1><a href="index.html#interest"><u>Interest</u></a></h1>
+										<ul>
+										<li>
+											<h3><a href="features-xiangqi.html">Features of Xiangqi Pieces</a></h3>
+										</li>
+									         <li>
+											<h3><a href="about-xiangqi.html">About Xiangqi</a></h3>
+										</li>
+										</ul>
+									</li>
+								</ul>
+							</section>
+
+					</section>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<article class="post">
+								<header>
+									<div class="title">
+										<h2><a>Ising Model</a></h2>
+										<p>What Are the Effective Ways to Have Periodic Boundary Conditions?</p>
+									</div>
+									<div class="meta">
+										<time class="published" datetime="2014-11-01">November 1, 2014</time>
+									</div>
+								</header>
+								<p>We can study the phase transition of a spin-glass based on the well-known <a href="https://en.wikipedia.org/wiki/Ising_model#Monte_Carlo_methods_for_numerical_simulation">Ising model and Metropolis algorithm</a>. The flipping of a spin depends on its neighboring spin configurations, and periodic boundary conditions are imposed such that we can study an 'infinite' system using a finite sized system. Periodic boundary conditions are commonly found in the other physical problems as well.</p>
+								<p>Assuming that we have a <em>L</em> times <em>L</em> square lattice system with <b>spin[i, j]</b> indicating a spin positioned at <em>i</em>-th and <em>j</em>-th site of the system. Let us mark the position of spin along the <em>i</em>-dimension as 0, 1, 2, ..., L - 1, and the same applied to the <em>j</em>-dimension. A straight forward implementation of periodic boundary conditions is using the if-else loop. For example (in Python):</p>
+
+<div class="jupyter">
+<div class="highlight"><pre><span></span><span class="c1"># di1 and di2, indices of spin to be manipulated</span>
+<span class="c1"># L: The size of square lattice edge, spin: A 2D numpy array</span>
+<span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">di1</span> <span class="o">=</span> <span class="n">L</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">di2</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="n">L</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">di1</span> <span class="o">=</span> <span class="n">L</span> <span class="o">-</span> <span class="mi">2</span>
+    <span class="n">di2</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">di1</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">di2</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+ 
+<span class="c1"># spin[di1, j] will be the previous neighbor of spin[i, j]</span>
+<span class="c1"># spin[di2, j] will be the next neighbor of spin[i, j]</span>
+</pre></div>
+</div>
+
+<p>Similarly, we can implement another if-else loop to handle the index <em>j</em>.</p>
+<p>If you refer to articles describing the Monte Carlo simulation for the phase transition of spins, you are likely to encounter another elegant solution for the implementation of periodic boundary conditions - using the mathematical operator <b>Modulo</b>.</p>
+<p>An example that illustrates the implementation of periodic boundary conditions using the Modulo operator:</p>
+
+<div class="jupyter">
+<div class="highlight"><pre><span></span><span class="c1"># spin[di1, j] will be the previous neighbor of spin[i, j]</span>
+<span class="c1"># spin[di2, j] will be the next neighbor of spin[i, j]</span>
+
+<span class="c1"># L: The size of a square lattice edge, spin: A 2D numpy array</span>
+<span class="c1"># The previous neighbor of spin[i, j], along the i-dimension</span>
+<span class="n">spin</span><span class="p">[(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">L</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+ 
+<span class="c1"># The next neighbor of spin[i, j], along the i-dimension</span>
+<span class="n">spin</span><span class="p">[(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">L</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Why do we consider the Modulo operator? You may have noticed that a Modulo operator can allow us to consider the nearby spins further away from the nearest neighbor of spin[<em>i</em>, <em>j</em>] which fulfills the periodic boundary condition. Considering a system with <em>L</em>=10, <b>spin[(<em>i</em> + 7) % <em>L</em>, <em>j</em>]</b> can evaluate the 7th-spin away from spin[<em>i</em>, <em>j</em>] such that the 7-th nearest neighbor to the right of i=7 will be i=4. We cannot easily implement the periodic boundary conditions  easily for neighbors further away by relying on simple conditional, if-else statements.</p>
+<p>
+It could be a good idea to avoid the Modulo operation which needs more computational time when <em>L</em> is a huge number. Perhaps we can initialize another array to mark the indices of of lattice site.</p>
+
+<div class="jupyter">
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span> <span class="c1"># Use numpy array</span>
+ 
+<span class="n">L</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="p">))</span>
+<span class="n">idx</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="p">)))</span>
+<span class="n">idx</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="p">)))</span>
+<span class="c1"># Convert the list to numpy array</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span> 
+ 
+<span class="c1"># The initialized array idx has the sequence of</span>
+<span class="c1"># 0, 1, 2 .. L - 1, 0, 1, 2, ..., L - 1, 0, 1, 2, ..., L - 1</span>
+<span class="c1"># idx with L = 4: [0 1 2 3 0 1 2 3 0 1 2 3]</span>
+ 
+<span class="c1"># The previous kth-neighbor of spin[i, j]</span>
+<span class="n">spin</span><span class="p">[</span><span class="n">idx</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">L</span> <span class="o">-</span> <span class="n">k</span><span class="p">],</span> <span class="n">j</span><span class="p">]</span>
+<span class="c1"># The next kth-neighbor of spin[i, j]</span>
+</pre></div>
+</div>
+
+<p>
+The above example assumes that we only need to evaluate the <b>farthest neighbor</b> of spin[i, j] with the size of L. If we only consider the nearest neighbor of a single spin, a sequence of [(L - 1), 0, 1, ..., (L - 1), 0] is sufficient for this purpose.</p>
+<p>
+I would like to have a quick idea on the elapsed times required for these different schemes. In the following examples, let us consider the flipping of every spin within a square lattice by applying the Metropolis algorithm. 100 Monte Carlo sweeps will be performed with each sweep having all the spins flipped, one by one. The nearest neighbor interaction is assumed in these examples. A <b>snippet of code</b> from the example of implementing the Modulo method:</p>
+<div class="jupyter">
+<div class="highlight"><pre><span></span><span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="c1"># Initialize the system</span>
+<span class="n">L</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">L</span>
+<span class="k">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+<span class="n">spin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">L</span><span class="p">,</span> <span class="n">L</span><span class="p">))</span>  <span class="c1"># 2D square lattice, spin up</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">300</span>  <span class="c1"># 300 K, for temperature</span>
+ 
+<span class="c1"># Method 2, using modulus method</span>
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">num</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+            <span class="c1"># eflip, the change in the energy of system if we flip the</span>
+            <span class="c1"># spin[i, j]. eflip depends on the configuration of 4 neighboring</span>
+            <span class="c1"># spins. For instance, with reference to spin[i, j], we should evaluate</span>
+            <span class="c1"># eflip based on spin[i+1, j], spin[i-1, j], spin[i, j+1], spin[i, j-1]</span>
+            <span class="n">eflip</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">spin</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="p">(</span>
+                <span class="n">spin</span><span class="p">[((</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">L</span><span class="p">),</span> <span class="n">j</span><span class="p">]</span> <span class="o">+</span>  <span class="c1"># -1 in i-dimension</span>
+                <span class="n">spin</span><span class="p">[((</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">L</span><span class="p">),</span> <span class="n">j</span><span class="p">]</span> <span class="o">+</span>  <span class="c1"># +1 in i-dimension</span>
+                <span class="n">spin</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">((</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">L</span><span class="p">)]</span> <span class="o">+</span>  <span class="c1"># -1 in j-dimension</span>
+                <span class="n">spin</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">((</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">L</span><span class="p">)]</span>    <span class="c1"># +1 in j-dimension</span>
+            <span class="p">)</span>
+            <span class="c1"># Metropolis algorithm</span>
+            <span class="k">if</span> <span class="n">eflip</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">:</span>
+                <span class="n">spin</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span><span class="o">*</span><span class="n">spin</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="o">*</span><span class="n">eflip</span><span class="o">/</span><span class="n">T</span><span class="p">)):</span>
+                    <span class="n">spin</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span><span class="o">*</span><span class="n">spin</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+ 
+<span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">spin</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>
+The following table summarizes the <b>rough estimation of elapsed time</b> from the test examples (since I am not performing a careful profiling analysis). The absolute values are not always consistent, nevertheless they can provide us the relative standings. You may download the <a href="https://github.com/JQGoh/jqlearning/tree/master/Simulation/PeriodicBoundary/python" target="_new">Python codes</a>, modify and test run the codes on your own computing platform.</p>
+<div align="center">
+<table style="width:600px;"><caption>Simulations performed by Python 3.4.2</caption>
+<tbody>
+<tr>
+<th style="border:2px solid black;vertical-align:middle;" rowspan="2">Size of <em>L</em></th>
+<th style="border:2px solid black;" colspan="3" align="center">Approximate elapsed time</th>
+</tr>
+<tr>
+<th style="border:2px solid black;">Index manipulation with array</th>
+<th style="border:2px solid black;">Modulo operation</th>
+<th style="border:2px solid black;">If-else loop</th>
+</tr>
+<tr>
+<td style="border:2px solid black;">200</td>
+<td style="border:2px solid black;">19.65</td>
+<td style="border:2px solid black;">16.94</td>
+<td style="border:2px solid black;">17.58</td>
+</tr>
+<tr>
+<td style="border:2px solid black;">1000</td>
+<td style="border:2px solid black;">511.76</td>
+<td style="border:2px solid black;">434.95</td>
+<td style="border:2px solid black;">446.11</td>
+</tr>
+<tr>
+<td style="border:2px solid black;">2000</td>
+<td style="border:2px solid black;">2131.76</td>
+<td style="border:2px solid black;">1839.68</td>
+<td style="border:2px solid black;">1910.25</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
+It turns out that if we implement the periodic boundary schemes as shown by the snippet of codes (Modulo operator) mentioned, it can complete the calculations in the shortest time as we scale up the size of <em>L</em>. If I try to repeat the same test with <a href="https://github.com/JQGoh/jqlearning/tree/master/Simulation/PeriodicBoundary/matlab" target="_new">Matlab codes</a> instead, we arrive at the following results:</p>
+<div align="center">
+<table style="width:600px;"><caption>Simulations performed by Matlab R2013b (8.2.0.701)</caption>
+<tbody>
+<tr>
+<th style="border:2px solid black;vertical-align:middle;" rowspan="2">Size of <em>L</em></th>
+<th style="border:2px solid black;" colspan="3" align="center">Approximate elapsed time</th>
+</tr>
+<tr>
+<th style="border:2px solid black;">Index manipulation with array</th>
+<th style="border:2px solid black;">Modulo operation</th>
+<th style="border:2px solid black;">If-else loop</th>
+</tr>
+<tr>
+<td style="border:2px solid black;">1000</td>
+<td style="border:2px solid black;">12.74</td>
+<td style="border:2px solid black;">27.90</td>
+<td style="border:2px solid black;">12.08</td>
+</tr>
+<tr>
+<td style="border:2px solid black;">5000</td>
+<td style="border:2px solid black;">360.81</td>
+<td style="border:2px solid black;">737.06</td>
+<td style="border:2px solid black;">350.56</td>
+</tr>
+<tr>
+<td style="border:2px solid black;">10000</td>
+<td style="border:2px solid black;">1451.20</td>
+<td style="border:2px solid black;">2844.43</td>
+<td style="border:2px solid black;">1395.8</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
+Based on these examples, we realize that Python codes requires more time in accessing the numpy array element. Surprisingly, the Python examples with Modulo operation can perform calculations faster than the examples implementing if-else conditions. Referring to the Matlab examples, a simple if-else condition is sufficient to provide us the fastest calculation as we are considering the nearest-neighbor spin interaction. Modulo operation in Matlab requires significantly more time than the other schemes.</p>
+<p>
+Note that these tests <b>DO NOT aim to compare</b> the performance of Python to Matlab. I tried to perform the calculations on the same computing platform to get an idea on the required elapsed timings. <span style="color:blue;">Edit: I believe it is the <a href="http://www.matlabtips.com/matlab-is-no-longer-slow-at-for-loops/" target="“_new”">Just-in-time compilation</a> routine can explain that the Matlab codes compute faster than Python at this level of programming interface</span>. One could also argue that the Python codes are not optimized for the simulation purpose and this results in the example with Modulo operation as the "best".</p>
+<p>
+The main idea of this post is to illustrate that<em> due to the different backend features of the programming platforms, we can arrive at different conclusions even though the semantic of programming appears the same</em>.</p>
+
+								<footer>
+								</footer>
+							</article>
+
+					</div>
+
+				<!-- Footer -->
+					<section id="footer">
+						<ul class="icons">
+							<li><a href="mailto:gohjingqiang@gmail.com" class="fa-envelope"><span class="label">Email</span></a></li>
+							<li><a href="https://github.com/JQGoh" class="fa-github"><span class="label">GitHub</span></a></li>
+							<li><a href="https://sg.linkedin.com/in/jingqianggoh" class="fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="https://twitter.com/JQGoh" class="fa-twitter"><span class="label">Twitter</span></a></li>
+						</ul>
+						<p class="copyright">&copy; Jing Qiang Goh. Design credited to: <a href="http://html5up.net">HTML5 UP</a>. </p>
+					</section>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

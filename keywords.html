@@ -1,0 +1,219 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>String Patterns with Keywords</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body class="single">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<h1><a href="index.html#about">Jing Qiang Goh</a></h1>
+						<nav class="links">
+							<ul>
+								<li><a href="index.html#datasci">Data Science</a></li>
+								<li><a href="index.html#simulate">Simulation</a></li>
+								<li><a href="index.html#code">Coding</a></li>
+								<li><a href="index.html#interest">Interest</a></li>
+							</ul>
+						</nav>
+						<nav class="main">
+							<ul>
+								<li class="menu">
+									<a class="fa-bars" href="#menu">Menu</a>
+								</li>
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<section id="menu">
+
+						<!-- Links -->
+							<section>
+								<ul class="links">
+									<h1><a href="index.html">Home</a></h1>
+									<li>
+										<h1><a href="index.html#datasci"><u>Data Science</u></a></h1>
+									        <ul>
+									        <li>
+											<h3><a href="keywords.html">String Patterns with Keywords</a></h3>
+									        </li>
+										<li>
+											<h3><a href="one2one-features.html">Features with One-to-one Correspondence</a></h3>
+										</li>
+									        <li>
+											<h3><a href="missing-data.html#post6">Dealing with Missing Data</a></h3>
+										</li>
+									        <li>
+											<h3><a href="summary-of-data.html">Summary of Data</a></h3>
+										</li>
+									        </ul>
+									</li>
+									<li>
+										<h1><a href="index.html#simulate"><u>Simulation</u></a></h1>
+										<ul>
+										<li>
+											<h3><a href="ising.html">Ising Model</a></h3>
+										</li>
+										</ul>
+									</li>
+									<li>
+										<h1><a href="index.html#code"><u>Coding</u></a></h1>
+										<ul>
+										<li>
+											<h3><a href="ligand.html">Ligand On a Cluster</a></h3>
+										</li>
+										</ul>
+									</li>
+									<li>
+										<h1><a href="index.html#interest"><u>Interest</u></a></h1>
+										<ul>
+										<li>
+											<h3><a href="features-xiangqi.html">Features of Xiangqi Pieces</a></h3>
+										</li>
+									         <li>
+											<h3><a href="about-xiangqi.html">About Xiangqi</a></h3>
+										</li>
+										</ul>
+									</li>
+								</ul>
+							</section>
+
+					</section>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<article class="post">
+								<header>
+									<div class="title">
+										<h2><a>String Patterns with Keywords</a></h2>
+										<p>Extracting the Sentences with Particular Keywords.</p>
+									</div>
+									<div class="meta">
+										<time class="published" datetime="2016-12-26">December 26, 2016</time>
+									</div>
+								</header>
+								<p>We often read and understand information from a given text, and our minds tend to pay a closer attention to the related keywords. It will be handy if we can understand the string patterns appearing together with the relevant keywords.</p>
+								<p>The following designed Python function can help me to extract the string patterns having the provided keywords:</p>
+								<div class="jupyter">
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">regex_rules</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">extract</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A function which returns the regular expression (regex) pattern for the</span>
+<span class="sd">    provided keywords.</span>
+<span class="sd"> </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    __________</span>
+<span class="sd">    words: list,</span>
+<span class="sd">        A list of keywords or regex patterns.</span>
+<span class="sd"> </span>
+<span class="sd">    extract: int,</span>
+<span class="sd">        0 - Only the provided keywords or regex patterns.</span>
+<span class="sd">        1 - Including words/word adjacent to the keywords or regex patterns.</span>
+<span class="sd">        2 - Including the whole sentence having the keywords or regex</span>
+<span class="sd">            patterns. It assumes a sentence is sandwiched by two periods</span>
+<span class="sd">            or start/end boundaries .</span>
+<span class="sd"> </span>
+<span class="sd">    Returns</span>
+<span class="sd">    _______</span>
+<span class="sd">    patterns: list,</span>
+<span class="sd">        A list of regex rules containing the keywords in the &#39;words&#39;,</span>
+<span class="sd">        according to the rules defined by &#39;extract&#39;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">words</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">,</span> <span class="s2">&quot;words is not in a list format&quot;</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;words must have elements of strings&quot;</span>
+ 
+    <span class="n">patterns</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">extract</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># \b means \x08, a backspace. So we need \\b</span>
+            <span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">b(&#39;</span> <span class="o">+</span> <span class="n">word</span> <span class="o">+</span> <span class="s1">&#39;)</span><span class="se">\\</span><span class="s1">b&#39;</span>
+        <span class="k">elif</span> <span class="n">extract</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># \w or \\w are the same</span>
+            <span class="c1"># The usage of () implies a backreference, need (?: )</span>
+            <span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;(?:\w+\s+|</span><span class="se">\\</span><span class="s1">b)(?:&#39;</span> <span class="o">+</span> <span class="n">word</span> <span class="o">+</span> <span class="s1">&#39;)(?:\s+\w+|</span><span class="se">\\</span><span class="s1">b)&#39;</span>
+        <span class="k">elif</span> <span class="n">extract</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">pattern</span> <span class="o">=</span> <span class="s2">&quot;(?:\.?|^)[^.]*</span><span class="se">\\</span><span class="s2">b(?:&quot;</span> <span class="o">+</span> <span class="n">word</span> <span class="o">+</span> <span class="s2">&quot;)</span><span class="se">\\</span><span class="s2">b[^.]*(?:\.?|$)&quot;</span>
+        <span class="n">patterns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">patterns</span>
+</pre></div>
+								</div>
+								<p>For a short paragraph like</p>
+<blockquote>Johnathan likes to play badminton. John likes to play basketball.
+Max likes computer games, but Johnathan prefer board games instead.
+Michael and Max love to play soccer.</blockquote>
+<p>If I am interested to learn whether the paragraph has mentioned about "John" or "Max", I could pass ['John|Max'] to the <b>regex_rules </b>function and refer to the extraction rule of 'keywords only' (extract = 0 in regex_rules). It will correctly identify the words of "John" and "Max", but not the "Johnathan". To understand what kind of "games" are mentioned in the paragraph,  we can search for neighboring words associated to the keyword "games". ['games'] provided to the <b>regex_rules </b>function (extract = 1 in regex_rules) will suggest a regular expression rule that can correctly identify string patterns of ['computer games', 'board games instead'], so we can learn that two types of games were mentioned in the text.</p>
+<p>
+Sometimes, we are interested to look for sentences having a particular keyword. For a paragraph like</p>
+<blockquote> I visited ABC company a few years ago.
+They    visit    ABC company in this coming
+weekend, and they would like to have another visit. Visit to ABC company
+makes people feeling great. I am keen to arrange a
+
+new visit
+
+by the end of the year.</blockquote>
+<p>
+, it may have sentences separated by unwanted blank lines (\n), white spaces or without properly placed period. The designed <b>regex_rules</b> can extract sentences sandwiched by "two periods" (or start/end boundaries), so a ['visit'] together with the extraction rule (extract = 2 in regex_rules)  will suggest the following extracted sentences.</p>
+<blockquote>
+<p class="p1"><span class="s1">'.\nThey<span class="Apple-converted-space">    </span>visit<span class="Apple-converted-space">    </span>ABC company in this coming\nweekend, and they would like to have another visit.'</span></p>
+<p class="p1"><span class="s1">' Visit to ABC company \nmakes people feeling great.'</span></p>
+<p class="p1"><span class="s1">' I am keen to arrange a\n\nnew visit\n\nby the end of the year.'</span></p>
+</blockquote>
+<p class="p1">This example demonstrates that we can extract all the sentences having the word 'visit' appropriately. For a more practical example, let's say we have an advertisement providing air-conditioning  maintenance service:</p>
+
+<blockquote>Hi there, we are from an international company. We provide excellent
+services and some of our clients are from MNC. We have been in the
+business for more than 50 years.
+
+Enroll into a yearly contract with us and get your air-conditioning
+serviced at $25 per unit.</blockquote>
+<p class="p1">A regular expression pattern such as</p>
+<div class="jupyter">
+<div class="highlight"><pre><span></span><span class="n">keyword</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;(?:\$?\d+\.?\d?\d?|price|charges?)(?: is| nett| per)?(?:/| per | an | one | half | every | each )(?:unit|(?!hour |hr )\w+)</span><span class="se">\\</span><span class="s1">b&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+
+<p>
+will help to search for a quote in the format of "price per unit". Key phrases such as "$25 per unit", "price per every session", "$50.00 nett every class" can be identified, but not matching those in hourly rate such as "$25 per hour". In this manner, we can understand the pricing format preferred by a service provider ($25 per unit).</p>
+<p>
+The <a href="https://github.com/JQGoh/jqlearning/blob/master/Analysis/StringPatternsWithKeywords/main.py">example code</a> of this analysis is available at my GitHub page.</p>
+
+								<footer>
+								</footer>
+							</article>
+
+					</div>
+
+				<!-- Footer -->
+					<section id="footer">
+						<ul class="icons">
+							<li><a href="mailto:gohjingqiang@gmail.com" class="fa-envelope"><span class="label">Email</span></a></li>
+							<li><a href="https://github.com/JQGoh" class="fa-github"><span class="label">GitHub</span></a></li>
+							<li><a href="https://sg.linkedin.com/in/jingqianggoh" class="fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="https://twitter.com/JQGoh" class="fa-twitter"><span class="label">Twitter</span></a></li>
+						</ul>
+						<p class="copyright">&copy; Jing Qiang Goh. Design credited to: <a href="http://html5up.net">HTML5 UP</a>. </p>
+					</section>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

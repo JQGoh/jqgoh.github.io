@@ -114,15 +114,15 @@
 								<p>
 								The ligand is attached to the gold surface by connecting their two sulfur atoms with two surface gold atoms. Attaching ligands to a cluster core manually by using a molecular visualizer (such as <a href="http://jmol.sourceforge.net/">Jmol</a>) with a computer mouse can be a repetitive and boring job.</p>
 								<p>
-								Using the  <a href="https://wiki.fysik.dtu.dk/ase/index.html">Atomic Simulation Environment</a> package, I designed a <a href="https://github.com/JQGoh/LigandsOnCluster"><b>program that can automate the process of attaching the ligands to the surface of a cluster</b></a>. The automation process assumes that a ligand is attached to only two surface atoms, marked by the sites (green dots) as shown below. If a ligand has occupied the sites marked by green dots, another ligand will not be able to occupy the sites marked by red dots as it will overlap with the existing ligand.</p>
+								Using the  <a href="https://wiki.fysik.dtu.dk/ase/index.html">Atomic Simulation Environment</a> package, I designed a <a href="https://github.com/JQGoh/LigandsOnCluster"><b>programme that can automate the process of attaching the ligands to the surface of a cluster</b></a>. The automation process assumes that a ligand is attached to only two surface atoms, marked by the sites (green dots) as shown below. If a ligand has occupied the sites marked by green dots, another ligand will not be able to occupy the sites marked by red dots as it will overlap with the existing ligand.</p>
 
 <img src="images/ligand/ligand-sites.png" alt="ligand-sites" width="300" height="300" />
-								<p>The designed program can
+								<p>The designed programme can
 <ol>
 	<li>Determine the surface atoms of a cluster core.</li>
 	<li>Thereafter, it automatically attach a given ligand molecule (with pre-defined orientation) to the surface of the cluster.</li>
 </ol></p>
-<p>Here is the result of attaching ligands to an icosahedral gold cluster using the designed program. This helps to save my effort in studying the effect of ligands orientation on cluster cores of different sizes and shapes in the future. The <a href="https://github.com/JQGoh/LigandsOnCluster/blob/master/tests/Au13Icosahedron/main.py">example code of this post</a> and the <a href="https://github.com/JQGoh/LigandsOnCluster">main program</a> are available on my GitHub page.</p>
+<p>Here is the result of attaching ligands to an icosahedral gold cluster using the programme. This helps to save my effort in studying the effect of ligands orientation on cluster cores of different sizes and shapes in the future. The <a href="https://github.com/JQGoh/LigandsOnCluster/blob/master/tests/Au13Icosahedron/main.py">example code of this post</a> and the <a href="https://github.com/JQGoh/LigandsOnCluster">main programme</a> are available on my GitHub page.</p>
 
 								<img src="images/ligand/au13-ligands.png" alt="Au13-ligands" />								
 

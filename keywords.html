@@ -104,7 +104,7 @@
 										<time class="published" datetime="2016-12-26">December 26, 2016</time>
 									</div>
 								</header>
-								<p>We often read and understand information from a given text, and our minds tend to pay a closer attention to the related keywords. It will be handy if we can understand the string patterns appearing together with the relevant keywords.</p>
+								<p>We often read and learn new information from a given text, and our minds tend to pay a closer attention to the related keywords. It will be convenient if we can extract the string patterns associated together with the relevant keywords.</p>
 								<p>The following designed Python function can help me to extract the string patterns having the provided keywords:</p>
 								<div class="jupyter">
 <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">regex_rules</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">extract</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
@@ -152,7 +152,7 @@
 <blockquote>Johnathan likes to play badminton. John likes to play basketball.
 Max likes computer games, but Johnathan prefer board games instead.
 Michael and Max love to play soccer.</blockquote>
-<p>If I am interested to learn whether the paragraph has mentioned about "John" or "Max", I could pass ['John|Max'] to the <b>regex_rules </b>function and refer to the extraction rule of 'keywords only' (extract = 0 in regex_rules). It will correctly identify the words of "John" and "Max", but not the "Johnathan". To understand what kind of "games" are mentioned in the paragraph,  we can search for neighboring words associated to the keyword "games". ['games'] provided to the <b>regex_rules </b>function (extract = 1 in regex_rules) will suggest a regular expression rule that can correctly identify string patterns of ['computer games', 'board games instead'], so we can learn that two types of games were mentioned in the text.</p>
+<p>If I am interested to learn whether the paragraph has mentioned about "John" or "Max", I could pass ['John|Max'] to the <b>regex_rules </b>function and refer to the extraction rule of 'keywords only' (extract = 0 in regex_rules). It will correctly identify the words of "John" and "Max", but not the "Johnathan". To understand what kind of "games" are mentioned in the paragraph,  we can search for neighboring words associated to the keyword "games". ['games'] provided to the <b>regex_rules </b>function (extract = 1 in regex_rules) will suggest a regular expression rule that can correctly identify string patterns of ['computer games', 'board games instead']. In this way, we can learn that two different types of games are mentioned in the text.</p>
 <p>
 Sometimes, we are interested to look for sentences having a particular keyword. For a paragraph like</p>
 <blockquote> I visited ABC company a few years ago.
@@ -164,13 +164,13 @@ new visit
 
 by the end of the year.</blockquote>
 <p>
-, it may have sentences separated by unwanted blank lines (\n), white spaces or without properly placed period. The designed <b>regex_rules</b> can extract sentences sandwiched by "two periods" (or start/end boundaries), so a ['visit'] together with the extraction rule (extract = 2 in regex_rules)  will suggest the following extracted sentences.</p>
+, it may have sentences separated by unwanted blank lines (\n), white spaces or without properly placed period. A paragraph of text <b>may not have sentences separated clearly with appropriate line breaks or white spaces</b> because of incorrect input data. The designed <b>regex_rules</b> can extract sentences sandwiched by "two periods" (or start/end boundaries), so a ['visit'] together with the extraction rule (extract = 2 in regex_rules)  will suggest the following extracted sentences.</p>
 <blockquote>
 <p class="p1"><span class="s1">'.\nThey<span class="Apple-converted-space">    </span>visit<span class="Apple-converted-space">    </span>ABC company in this coming\nweekend, and they would like to have another visit.'</span></p>
 <p class="p1"><span class="s1">' Visit to ABC company \nmakes people feeling great.'</span></p>
 <p class="p1"><span class="s1">' I am keen to arrange a\n\nnew visit\n\nby the end of the year.'</span></p>
 </blockquote>
-<p class="p1">This example demonstrates that we can extract all the sentences having the word 'visit' appropriately. For a more practical example, let's say we have an advertisement providing air-conditioning  maintenance service:</p>
+<p class="p1">This example demonstrates that we can extract all the sentences having the word 'visit' appropriately, even the paragraph has inappropriate line breaks. For a more practical example, let's say we have an advertisement providing air-conditioning  maintenance service:</p>
 
 <blockquote>Hi there, we are from an international company. We provide excellent
 services and some of our clients are from MNC. We have been in the
@@ -185,9 +185,9 @@ serviced at $25 per unit.</blockquote>
 </div>
 
 <p>
-will help to search for a quote in the format of "price per unit". Key phrases such as "$25 per unit", "price per every session", "$50.00 nett every class" can be identified, but not matching those in hourly rate such as "$25 per hour". In this manner, we can understand the pricing format preferred by a service provider ($25 per unit).</p>
+will help to search for a quote in the format of "price ker unit". Key phrases such as "$25 per unit", "price per every session", "$50.00 nett every class" can be identified, but not matching those in hourly rate such as "$25 per hour". In this manner, we can understand the pricing format preferred by a service provider ($25 per unit) by extracting any sentence with this type of keyword using the regex_rules function.</p>
 <p>
-The <a href="https://github.com/JQGoh/jqlearning/blob/master/Analysis/StringPatternsWithKeywords/main.py">example code</a> of this analysis is available on my GitHub page.</p>
+The <a href="https://github.com/JQGoh/jqlearning/blob/master/Analysis/StringPatternsWithKeywords/main.py">example code</a> of this post is available on my GitHub page.</p>
 
 								<footer>
 								</footer>

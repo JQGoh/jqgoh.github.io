@@ -104,8 +104,8 @@
 										<time class="published" datetime="2014-11-01">November 1, 2014</time>
 									</div>
 								</header>
-								<p>We can study the phase transition of a spin-glass based on the well-known <a href="https://en.wikipedia.org/wiki/Ising_model#Monte_Carlo_methods_for_numerical_simulation">Ising model and Metropolis algorithm</a>. The flipping of a spin depends on its neighboring spin configurations, and periodic boundary conditions are imposed such that we can study an 'infinite' system using a finite sized system. Periodic boundary conditions are commonly found in the other physical problems as well.</p>
-								<p>Assuming that we have a <em>L</em> times <em>L</em> square lattice system with <b>spin[i, j]</b> indicating a spin positioned at <em>i</em>-th and <em>j</em>-th site of the system. Let us mark the position of spin along the <em>i</em>-dimension as 0, 1, 2, ..., L - 1, and the same applied to the <em>j</em>-dimension. A straight forward implementation of periodic boundary conditions is using the if-else loop. For example (in Python):</p>
+								<p>We can study the phase transition of a spin-glass based on the well-known <a href="https://en.wikipedia.org/wiki/Ising_model#Monte_Carlo_methods_for_numerical_simulation">Ising model and Metropolis algorithm</a>. The flipping of a spin depends on its neighboring spin configurations, and periodic boundary conditions are imposed such that we can study an 'infinite' system using a finite sized spin system. Periodic boundary conditions are commonly found in the other physical problems as well.</p>
+								<p>Assuming that we have a <em>L</em> times <em>L</em> square lattice system with <b>spin[i, j]</b> indicating a spin positioned at <em>i</em>-th and <em>j</em>-th site of the system. Let us mark the position of spin along the <em>i</em>-dimension as 0, 1, 2, ..., L - 1, and the same applied to the <em>j</em>-dimension. A straight forward implementation of periodic boundary conditions is using an if-else loop, such as (Python example):</p>
 
 <div class="jupyter">
 <div class="highlight"><pre><span></span><span class="c1"># di1 and di2, indices of spin to be manipulated</span>
@@ -126,7 +126,7 @@
 </div>
 
 <p>Similarly, we can implement another if-else loop to handle the index <em>j</em>.</p>
-<p>If you refer to articles describing the Monte Carlo simulation for the phase transition of spins, you are likely to encounter another elegant solution for the implementation of periodic boundary conditions - using the mathematical operator <b>Modulo</b>.</p>
+<p>If you refer to articles describing the Monte Carlo simulation for the phase transition of spins, you are likely to learn an elegant solution for the implementation of periodic boundary conditions - using the mathematical operator <b>Modulo</b>.</p>
 <p>An example that illustrates the implementation of periodic boundary conditions using the Modulo operator:</p>
 
 <div class="jupyter">
@@ -141,9 +141,9 @@
 <span class="n">spin</span><span class="p">[(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">L</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>Why do we consider the Modulo operator? You may have noticed that a Modulo operator can allow us to consider the nearby spins further away from the nearest neighbor of spin[<em>i</em>, <em>j</em>] which fulfills the periodic boundary condition. Considering a system with <em>L</em>=10, <b>spin[(<em>i</em> + 7) % <em>L</em>, <em>j</em>]</b> can evaluate the 7th-spin away from spin[<em>i</em>, <em>j</em>] such that the 7-th nearest neighbor to the right of i=7 will be i=4. We cannot easily implement the periodic boundary conditions  easily for neighbors further away by relying on simple conditional, if-else statements.</p>
+<p>Why do we consider the Modulo operator? You may have noticed that a Modulo operator can allow us to consider periodic boundary condition for the <b>nearby spins further away from the nearest neighbor</b> of spin[<em>i</em>, <em>j</em>]. Considering a system with <em>L</em>=10, <b>spin[(<em>i</em> + 7) % <em>L</em>, <em>j</em>]</b> can evaluate the 7th-spin away from spin[<em>i</em>, <em>j</em>] such that the 7-th nearest neighbor to the right of i=7 will be i=4. We cannot easily implement the periodic boundary conditions for neighbors further away by relying on simple conditional, if-else statements.</p>
 <p>
-It could be a good idea to avoid the Modulo operation which needs more computational time when <em>L</em> is a huge number. Perhaps we can initialize another array to mark the indices of of lattice site.</p>
+It could be a good idea to avoid the Modulo operation which needs more computational time when <em>L</em> is a huge number. Perhaps we can initialize another array to mark the indices of of lattice site such that we can refer this array for implementing the periodic boundary conditions.</p>
 
 <div class="jupyter">
 <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span> <span class="c1"># Use numpy array</span>
@@ -166,9 +166,9 @@ It could be a good idea to avoid the Modulo operation which needs more computati
 </div>
 
 <p>
-The above example assumes that we only need to evaluate the <b>farthest neighbor</b> of spin[i, j] with the size of L. If we only consider the nearest neighbor of a single spin, a sequence of [(L - 1), 0, 1, ..., (L - 1), 0] is sufficient for this purpose.</p>
+The above example assumes that we only need to evaluate the <b>farthest neighbor</b> of spin[i, j] with the size of L. If we only consider the nearest neighbor of a single spin, an array of [(L - 1), 0, 1, ..., (L - 1), 0] is sufficient for this purpose.</p>
 <p>
-I would like to have a quick idea on the elapsed times required for these different schemes. In the following examples, let us consider the flipping of every spin within a square lattice by applying the Metropolis algorithm. 100 Monte Carlo sweeps will be performed with each sweep having all the spins flipped, one by one. The nearest neighbor interaction is assumed in these examples. A <b>snippet of code</b> from the example of implementing the Modulo method:</p>
+I would like to have a quick idea on the elapsed times required for these different periodic boundary schemes. In the following examples, let us consider the flipping of every spin within a square lattice by applying the Metropolis algorithm. 100 Monte Carlo sweeps are performed with each sweep having all the spins flipped, one by one. The nearest neighbor interaction is assumed in these examples. Below has a <b>snippet of code</b> for the example of using the Modulo method:</p>
 <div class="jupyter">
 <div class="highlight"><pre><span></span><span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 <span class="c1"># Initialize the system</span>
@@ -275,11 +275,11 @@ It turns out that if we implement the periodic boundary schemes as shown by the 
 </table>
 </div>
 <p>
-Based on these examples, we realize that Python codes requires more time in accessing the numpy array element. Surprisingly, the Python examples with Modulo operation can perform calculations faster than the examples implementing if-else conditions. Referring to the Matlab examples, a simple if-else condition is sufficient to provide us the fastest calculation as we are considering the nearest-neighbor spin interaction. Modulo operation in Matlab requires significantly more time than the other schemes.</p>
+Based on these examples, we realize that Python codes require more time in accessing the numpy array element. Surprisingly, the Python examples with Modulo operation can perform calculations faster than the examples implementing if-else conditions. Referring to the Matlab examples, a simple if-else condition is sufficient to provide us the fastest calculation as we only consider the nearest-neighbor spin interaction. Modulo operation in Matlab requires significantly more time than the other schemes.</p>
 <p>
-Note that these tests <b>DO NOT aim to compare</b> the performance of Python to Matlab. I tried to perform the calculations on the same computing platform to get an idea on the required elapsed timings. <span style="color:blue;">Edit: I believe it is the <a href="http://www.matlabtips.com/matlab-is-no-longer-slow-at-for-loops/" target="“_new”">Just-in-time compilation</a> routine can explain that the Matlab codes compute faster than Python at this level of programming interface</span>. One could also argue that the Python codes are not optimized for the simulation purpose and this results in the example with Modulo operation as the "best".</p>
+Note that these tests <b>DO NOT aim to compare</b> the performance of Python to Matlab. <span style="color:blue;">Edit: I believe it is the <a href="http://www.matlabtips.com/matlab-is-no-longer-slow-at-for-loops/" target="“_new”">Just-in-time compilation</a> routine can explain that the Matlab codes compute faster than Python at this level of programming interface</span>. One could also argue that the Python codes are not optimized for the simulation purpose and this results in the example with Modulo operation as the "best".</p>
 <p>
-The main idea of this post is to illustrate that<em> due to the different backend features of the programming platforms, we can arrive at different conclusions even though the semantic of programming appears the same</em>.</p>
+Other than demonstrating the effective ways of implementing boundary condiitons, this post also demonstrates that <em><b>due to the different backend features of the programming platforms, we can arrive at different conclusions even though the semantic of programming appears the same</b></em>.</p>
 
 								<footer>
 								</footer>

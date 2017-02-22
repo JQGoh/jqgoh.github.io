@@ -105,13 +105,13 @@
 									</div>
 								</header>
 <p>
-Assuming that we have a new data set which has been cleaned and organized following a standard format such as comma-separated value (CSV). This data set is likely to have both text and numeric information. An example of a text information refers to a categorical name such as gender. Meanwhile, a numeric data can suggest us the distribution of a continuous values assigned to a feature.</p>
+Assuming that we have a new data set which has been cleaned and organized following a standard format such as comma-separated value (CSV). This data set is likely to have both text and numeric information. A text data can refer to a categorical value such as the occupation of a customer (doctor, police and etc.). Meanwhile, a numeric data can suggest us the distribution of a continuous values assigned to a feature.</p>
 <p>
 In order to understand the features of a new data set, I designed a <a href="https://github.com/JQGoh/jqlearning/blob/master/PreprocessingData/bin/preprocess.py#L10" target="_new">function: summary()</a> using Pandas and Matplotlib packages to plot the histogram distribution of the numeric data and describe the basic information of the text data.</p> 
 <p>
-The designed function can warn us of any undefined or missing data for an imported CSV file. In the following, I presents the summary of the <a href="https://www.kaggle.com/c/predict-west-nile-virus/data">training set data (train.csv)</a> used for the Kaggle competition: "Predict West Nile virus in mosquitos across the city of Chicago".</p>
+The designed function can warn us of any undefined or missing data found in an imported CSV file. In the following, I presents the summary of the <a href="https://www.kaggle.com/c/predict-west-nile-virus/data">training set data (train.csv)</a> used for the Kaggle competition: "Predict West Nile virus in mosquitos across the city of Chicago".</p>
 <p>
-In this way, other than having a brief idea on the distribution of numeric data, one can also learn about the number of unique values representing the text information (categorical features). We could also easily identify which entry appears the most for a given feature. The following <a href="https://github.com/JQGoh/jqlearning/blob/master/PreprocessingData/tests/summary.py" target="_new">example code</a> demonstrates the usage of <a href="https://github.com/JQGoh/jqlearning/blob/master/PreprocessingData/bin/data.py#L8" target="_new">DataIn instance</a> to summarise the imported data.</p>
+In this way, other than having a brief idea on the distribution of numeric data, one can also learn about the total number of unique values representing the text data. We could also easily identify which entry appears the most for a given feature. The following <a href="https://github.com/JQGoh/jqlearning/blob/master/PreprocessingData/tests/summary.py" target="_new">example code</a> demonstrates the usage of <a href="https://github.com/JQGoh/jqlearning/blob/master/PreprocessingData/bin/data.py#L8" target="_new">DataIn instance</a> to summarize the imported data.</p>
 
 
 <!-- JQ notebook -->

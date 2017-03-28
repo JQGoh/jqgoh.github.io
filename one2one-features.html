@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Features with One-to-one Correspondence</title>
+		<title>Features with One to one Correspondence</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -48,7 +48,7 @@
 											<h3><a href="keywords.html">String Patterns with Keywords</a></h3>
 									        </li>
 										<li>
-											<h3><a href="one2one-features.html">Features with One-to-one Correspondence</a></h3>
+											<h3><a href="one2one-features.html">Features with One to One Correspondence</a></h3>
 										</li>
 									        <li>
 											<h3><a href="missing-data.html#post6">Dealing with Missing Data</a></h3>
@@ -97,7 +97,7 @@
 							<article class="post">
 								<header>
 									<div class="title">
-										<h2><a>Features with One-to-one Correspondence</a></h2>
+										<h2><a>Features with One to One Correspondence</a></h2>
 										<p>How do we learn about the redundant features?</p>
 									</div>
 									<div class="meta">
@@ -105,9 +105,9 @@
 									</div>
 								</header>
 								<p>A data set may have features referring to the same information. For example, the <a href="https://www.kaggle.com/c/predict-west-nile-virus/data" target="_new">train.csv</a> data in the Kaggle competition: "Predict West Nile virus in mosquitos across the city of Chicago", have features of <em>Address</em>, <em>AddressNumberAndStreet</em>, <em>Latitude</em> and <em>Longitude</em> referring to the locations of mosquito traps. These features have the same total number of unique values (138 of them) and they are representing the same information.</p>
-								<p>Some data sets may have features of different names that do not suggest the same information at the first place, in contrast to the example above. Even for features sharing the same total number of unique values, there is no guarantee that the features represent the same information. In order to determine whether the chosen features are basically representing the same information, their unique values must fulfill the transformation of one-to-one correspondence. I designed a <a href="https://github.com/JQGoh/jqlearning/blob/master/PreprocessingData/bin/data.py#L85" target="_new">function: unique_sets()</a> which can carefully evaluate whether any <b>pair of features sharing the same total number of unique values are also one-to-one correspondence</b>.</p>
+								<p>Some data sets may have features of different names that do not suggest the same information at the first place, in contrast to the example above. Even for features sharing the same total number of unique values, there is no guarantee that the features represent the same information. In order to determine whether the chosen features are basically representing the same information, their unique values must fulfill the transformation of one to one correspondence. I designed a <a href="https://github.com/JQGoh/jqlearning/blob/master/PreprocessingData/bin/data.py#L85" target="_new">function: unique_sets()</a> which can carefully evaluate whether any <b>pair of features sharing the same total number of unique values are also one to one correspondence</b>.</p>
 								<p>
-								<a href="https://github.com/JQGoh/jqlearning/blob/master/PreprocessingData/tests/one2one_sets.py" target="_new"><b>For an example</b></a>, let us refer to a corrupted data set, train-corrupted.csv, which mislabel some parts of the train.csv data. train-corrupted.csv has the <em>Address</em> of 1st entry marked incorrectly as "6200 North Mandell Avenue, Chicago, IL 60646, USA" meanwhile the <em>AddressNumberAndStreet</em> of the second entry marked incorrectly as "6200 N MANDELL AVE, Chicago, IL". In this manner, <em>Address</em> and <em>AddressNumberAndStreet</em> no longer fulfills the one-to-one relationship, and the unique_sets() correctly identifies that only <em>Latitude</em> and <em>Longitude</em> features fulfill the required criteria even these features share the same total number of unqiue values.</p>
+								<a href="https://github.com/JQGoh/jqlearning/blob/master/PreprocessingData/tests/one2one_sets.py" target="_new"><b>For an example</b></a>, let us refer to a corrupted data set, train-corrupted.csv, which mislabel some parts of the train.csv data. train-corrupted.csv has the <em>Address</em> of 1st entry marked incorrectly as "6200 North Mandell Avenue, Chicago, IL 60646, USA" meanwhile the <em>AddressNumberAndStreet</em> of the second entry marked incorrectly as "6200 N MANDELL AVE, Chicago, IL". In this manner, <em>Address</em> and <em>AddressNumberAndStreet</em> no longer fulfills the one to one relationship, and the unique_sets() correctly identifies that only <em>Latitude</em> and <em>Longitude</em> features fulfill the required criteria even these features share the same total number of unqiue values.</p>
 
 								<div class="output_wrapper">
 <div class="output">
@@ -127,7 +127,7 @@ Number of unique values: 138, Features: [&#39;Address&#39;, &#39;AddressNumberAn
 Number of unique values: 2, Features: [&#39;WnvPresent&#39;]
 Number of unique values: 95, Features: [&#39;Date&#39;]
 Conclusion:
-Features [&#39;Latitude&#39;, &#39;Longitude&#39;] have 138 values which are one-to-one correspondence.
+Features [&#39;Latitude&#39;, &#39;Longitude&#39;] have 138 values which are one to one correspondence.
 
 </pre>
 </div>

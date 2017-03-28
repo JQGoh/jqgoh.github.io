@@ -105,27 +105,26 @@
 									</div>
 								</header>
 								<p>We often read and learn new information from a given text, and our minds tend to pay a closer attention to the related keywords. It will be convenient if we can extract the string patterns associated together with the relevant keywords.</p>
-								<p>The following designed Python function can help me to extract the string patterns having the provided keywords:</p>
-								<div class="jupyter">
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">regex_rules</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">extract</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+								<p>The following designed function: regex_rules() can help me to extract the string patterns having the provided keywords:</p>
+								<div class="jupyter"> <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">regex_rules</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">extract</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A function which returns the regular expression (regex) pattern for the</span>
 <span class="sd">    provided keywords.</span>
 <span class="sd"> </span>
 <span class="sd">    Parameters</span>
-<span class="sd">    __________</span>
-<span class="sd">    words: list,</span>
+<span class="sd">    ----------</span>
+<span class="sd">    words : list</span>
 <span class="sd">        A list of keywords or regex patterns.</span>
 <span class="sd"> </span>
-<span class="sd">    extract: int,</span>
-<span class="sd">        0 - Only the provided keywords or regex patterns.</span>
-<span class="sd">        1 - Including words/word adjacent to the keywords or regex patterns.</span>
-<span class="sd">        2 - Including the whole sentence having the keywords or regex</span>
-<span class="sd">            patterns. It assumes a sentence is sandwiched by two periods</span>
-<span class="sd">            or start/end boundaries .</span>
+<span class="sd">    extract : int, default 0</span>
+<span class="sd">        - 0 : Only the provided keywords or regex patterns.</span>
+<span class="sd">        - 1 : Including words/word adjacent to the keywords or regex patterns.</span>
+<span class="sd">        - 2 : Including the whole sentence having the keywords or regex</span>
+<span class="sd">              patterns. It assumes a sentence is sandwiched by two periods</span>
+<span class="sd">              or start/end boundaries .</span>
 <span class="sd"> </span>
 <span class="sd">    Returns</span>
-<span class="sd">    _______</span>
-<span class="sd">    patterns: list,</span>
+<span class="sd">    -------</span>
+<span class="sd">    patterns : list</span>
 <span class="sd">        A list of regex rules containing the keywords in the &#39;words&#39;,</span>
 <span class="sd">        according to the rules defined by &#39;extract&#39;.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -152,7 +151,7 @@
 <blockquote>Johnathan likes to play badminton. John likes to play basketball.
 Max likes computer games, but Johnathan prefer board games instead.
 Michael and Max love to play soccer.</blockquote>
-<p>If I am interested to learn whether the paragraph has mentioned about "John" or "Max", I could pass ['John|Max'] to the <b>regex_rules </b>function and refer to the extraction rule of 'keywords only' (extract = 0 in regex_rules). It will correctly identify the words of "John" and "Max", but not the "Johnathan". To understand what kind of "games" are mentioned in the paragraph,  we can search for neighboring words associated to the keyword "games". ['games'] provided to the <b>regex_rules </b>function (extract = 1 in regex_rules) will suggest a regular expression rule that can correctly identify string patterns of ['computer games', 'board games instead']. In this way, we can learn that two different types of games are mentioned in the text.</p>
+<p>If I am interested to learn whether the paragraph has mentioned about "John" or "Max", I could pass ['John|Max'] to the regex_rules function and refer to the extraction rule of 'keywords only' (extract = 0 in regex_rules). It will correctly identify the words of "John" and "Max", but not the "Johnathan". To understand what kind of "games" are mentioned in the paragraph,  we can search for neighboring words associated to the keyword "games". ['games'] provided to the regex_rules function (extract = 1 in regex_rules) will suggest a regular expression rule that can correctly identify string patterns of ['computer games', 'board games instead']. In this way, we can learn that two different types of games are mentioned in the text.</p>
 <p>
 Sometimes, we are interested to look for sentences having a particular keyword. For a paragraph like</p>
 <blockquote> I visited ABC company a few years ago.
@@ -164,7 +163,7 @@ new visit
 
 by the end of the year.</blockquote>
 <p>
-, it may have sentences separated by unwanted blank lines (\n), white spaces or without properly placed period. A paragraph of text <b>may not have sentences separated clearly with appropriate line breaks or white spaces</b> because of incorrect input data. The designed <b>regex_rules</b> can extract sentences sandwiched by "two periods" (or start/end boundaries), so a ['visit'] together with the extraction rule (extract = 2 in regex_rules)  will suggest the following extracted sentences.</p>
+, it may have sentences separated by unwanted blank lines (\n), white spaces or without properly placed period. A paragraph of text <b>may not have sentences separated clearly with appropriate line breaks or white spaces</b> because of incorrect input data. The designed regex_rules can extract sentences sandwiched by <b>two periods</b> (or start/end boundaries in regular expression pattern), and this assumption <b>does not work for sentences having url links</b>. Nevertheless, a ['visit'] together with the extraction rule (extract = 2 in regex_rules)  will suggest the following extracted sentences.</p>
 <blockquote>
 <p class="p1"><span class="s1">'.\nThey<span class="Apple-converted-space">    </span>visit<span class="Apple-converted-space">    </span>ABC company in this coming\nweekend, and they would like to have another visit.'</span></p>
 <p class="p1"><span class="s1">' Visit to ABC company \nmakes people feeling great.'</span></p>

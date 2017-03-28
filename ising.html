@@ -130,9 +130,7 @@
 <p>An example that illustrates the implementation of periodic boundary conditions using the Modulo operator:</p>
 
 <div class="jupyter">
-<div class="highlight"><pre><span></span><span class="c1"># spin[di1, j] will be the previous neighbor of spin[i, j]</span>
-<span class="c1"># spin[di2, j] will be the next neighbor of spin[i, j]</span>
-
+<div class="highlight"><pre>
 <span class="c1"># L: The size of a square lattice edge, spin: A 2D numpy array</span>
 <span class="c1"># The previous neighbor of spin[i, j], along the i-dimension</span>
 <span class="n">spin</span><span class="p">[(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">L</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
@@ -162,6 +160,7 @@ It could be a good idea to avoid the Modulo operation which needs more computati
 <span class="c1"># The previous kth-neighbor of spin[i, j]</span>
 <span class="n">spin</span><span class="p">[</span><span class="n">idx</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">L</span> <span class="o">-</span> <span class="n">k</span><span class="p">],</span> <span class="n">j</span><span class="p">]</span>
 <span class="c1"># The next kth-neighbor of spin[i, j]</span>
+<span class="n">spin</span><span class="p">[</span><span class="n">idx</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">L</span> <span class="o">+</span> <span class="n">k</span><span class="p">],</span> <span class="n">j</span><span class="p">]</span>
 </pre></div>
 </div>
 

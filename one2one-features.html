@@ -104,19 +104,13 @@
 										<time class="published" datetime="2016-05-05">May 5, 2016</time>
 									</div>
 								</header>
-								<p>A data set may have features referring to the same information. For example, the <a href="https://www.kaggle.com/c/predict-west-nile-virus/data" target="_new">train.csv</a> data in the Kaggle competition: "Predict West Nile virus in mosquitos across the city of Chicago", have features of <em>Address</em>, <em>AddressNumberAndStreet</em>, <em>Latitude</em> and <em>Longitude</em> referring to the locations of mosquito traps. These features have the same total number of unique values (138 of them) and they are representing the same information.</p>
-								<p>Some data sets may have features of different names that do not suggest the same information at the first place, in contrast to the example above. Even for features sharing the same total number of unique values, there is no guarantee that the features represent the same information. In order to determine whether the chosen features are basically representing the same information, their unique values must fulfill the transformation of one to one correspondence. I designed a <a href="https://github.com/JQGoh/jqlearning/blob/master/PreprocessingData/bin/data.py#L85" target="_new">function: unique_sets()</a> which can carefully evaluate whether any <b>pair of features sharing the same total number of unique values are also one to one correspondence</b>.</p>
-								<p>
-								<a href="https://github.com/JQGoh/jqlearning/blob/master/PreprocessingData/tests/one2one_sets.py" target="_new"><b>For an example</b></a>, let us refer to a corrupted data set, train-corrupted.csv, which mislabel some parts of the train.csv data. train-corrupted.csv has the <em>Address</em> of 1st entry marked incorrectly as "6200 North Mandell Avenue, Chicago, IL 60646, USA" meanwhile the <em>AddressNumberAndStreet</em> of the second entry marked incorrectly as "6200 N MANDELL AVE, Chicago, IL". In this manner, <em>Address</em> and <em>AddressNumberAndStreet</em> no longer fulfills the one to one relationship, and the unique_sets() correctly identifies that only <em>Latitude</em> and <em>Longitude</em> features fulfill the required criteria even these features share the same total number of unqiue values.</p>
-
-								<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
+								<p>A data set may have features referring to the same information. The following example shows that the <a href="https://www.kaggle.com/c/predict-west-nile-virus/data" target="_new">train.csv</a> data in the Kaggle competition: "Predict West Nile virus in mosquitos across the city of Chicago", have features of <em>Address</em>, <em>AddressNumberAndStreet</em>, <em>Latitude</em> and <em>Longitude</em> referring to the locations of mosquito traps. These features have the same total number of unique values (138 of them) and they represent the same information. </p>
+	
+<div class="output_wrapper">
 <pre>
+--------------------------------------------------------------------------------
 Number of unique values and their corresponding features
+--------------------------------------------------------------------------------
 Number of unique values: 64, Features: [&#39;Block&#39;]
 Number of unique values: 128, Features: [&#39;Street&#39;]
 Number of unique values: 50, Features: [&#39;NumMosquitos&#39;]
@@ -126,17 +120,170 @@ Number of unique values: 136, Features: [&#39;Trap&#39;]
 Number of unique values: 138, Features: [&#39;Address&#39;, &#39;AddressNumberAndStreet&#39;, &#39;Latitude&#39;, &#39;Longitude&#39;]
 Number of unique values: 2, Features: [&#39;WnvPresent&#39;]
 Number of unique values: 95, Features: [&#39;Date&#39;]
-Conclusion:
-Features [&#39;Latitude&#39;, &#39;Longitude&#39;] have 138 values which are one to one correspondence.
+**********          Conclusion for one to one correspondence          **********
+Features [&#39;Address&#39;, &#39;AddressNumberAndStreet&#39;, &#39;Latitude&#39;, &#39;Longitude&#39;] have 138 unique values
+which are one to one correspondence.
+</pre>
+</div>
 
+<p>Some data sets may have features of different names that do not suggest the same information at the first place, in contrast to the example above. Even for features sharing the same total number of unique values, there is no guarantee that the features represent the same information. In order to determine whether the chosen features are basically representing the same information, their unique values must fulfill the transformation of one to one correspondence. I designed functions: <a href="https://github.com/JQGoh/jqlearning/blob/master/PreprocessingData/bin/data.py" target="_new">unique_sets()</a> and <a href="https://github.com/JQGoh/jqlearning/blob/master/PreprocessingData/bin/preprocess.py" target="_new">one2one()</a>, which help to evaluate whether any <b>pair of features sharing the same total number of unique values are also one to one correspondence</b>.</p>
+
+<p>
+unique_sets() basically collect the features sharing the same total number of unique values into the same group. Obviously, two features that have different total number of unique values will not be one to one correspondence. one2one() evaluates the correspondence with the help of groupby() function of pandas.DataFrame. In this case, for a DataFrame with two features, we can perform grouping based on the first feature (df.columns[0], refer to the code below). We should expect the total number of unique values in each group is exactly 1, for one to one relationship to be valid. 
+</p>
+
+<div class="jupyter">
+  <div tabindex="-1" id="notebook" class="border-box-sizing">
+    <div class="container" id="notebook-container">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">one2one</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Check whether the two columns of a DataFrame have one to one correspondence.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    __________</span>
+<span class="sd">    df : pandas.DataFrame, shape [n_samples, 2]</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    relation : boolean</span>
+<span class="sd">        True, if one to one correspondence found.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;DataFrame does not have two columns&quot;</span>
+
+    <span class="n">counts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># check the unique mapping from the 1st column to the 2nd column</span>
+    <span class="c1"># the relationship implies bidirectional mapping, if that is True</span>
+    <span class="n">group</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">nums</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">unique</span><span class="p">()))</span>
+    <span class="n">counts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nums</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+    <span class="c1"># check whether the counts are 1 for each row</span>
+    <span class="n">relation</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">counts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">relation</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">relation</span> 
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+    </div>
+  </div>
+</div>
+
+<p>
+Based on these functions, I designed a helper function <a href="https://github.com/JQGoh/jqlearning/blob/master/PreprocessingData/bin/data.py" target="_new">one2one_sets()</a> which first executes the unique_sets(), followed by inspecting one to one correspondence of any pair of features having the same total number of unique values.</p>
+
+								<p>
+								Let us refer to a corrupted data set, train-corrupted.csv, which mislabel some parts of the data in train.csv. train-corrupted.csv has the <em>Address</em> of 1st entry marked incorrectly as "6200 North Mandell Avenue, Chicago, IL 60646, USA" meanwhile the <em>AddressNumberAndStreet</em> of the second entry marked incorrectly as "6200 N MANDELL AVE, Chicago, IL". In this manner, <em>Address</em> and <em>AddressNumberAndStreet</em> no longer fulfills the one to one relationship, and the one2one_sets() correctly identifies that only <em>Latitude</em> and <em>Longitude</em> features fulfill the required criteria even these features share the same total number of unqiue values.</p>
+
+								<div class="output_wrapper">
+<div class="output">
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+--------------------------------------------------------------------------------
+Number of unique values and their corresponding features
+--------------------------------------------------------------------------------
+Number of unique values: 64, Features: [&#39;Block&#39;]
+Number of unique values: 128, Features: [&#39;Street&#39;]
+Number of unique values: 50, Features: [&#39;NumMosquitos&#39;]
+Number of unique values: 4, Features: [&#39;AddressAccuracy&#39;]
+Number of unique values: 7, Features: [&#39;Species&#39;]
+Number of unique values: 136, Features: [&#39;Trap&#39;]
+Number of unique values: 138, Features: [&#39;Address&#39;, &#39;AddressNumberAndStreet&#39;, &#39;Latitude&#39;, &#39;Longitude&#39;]
+Number of unique values: 2, Features: [&#39;WnvPresent&#39;]
+Number of unique values: 95, Features: [&#39;Date&#39;]
+**********          Conclusion for one to one correspondence          **********
+Features [&#39;Latitude&#39;, &#39;Longitude&#39;] have 138 unique values
+which are one to one correspondence.
 </pre>
 </div>
 </div>
-
 </div>
 </div>
 
 								<p>Lastly, if we apply the designed script to investigate all the features of weather.csv data, we can conclude that the features <em>Station</em> and <em>Depth</em> are referring to the same information. Hence, we can thus remove all the redundant features of our data before continuing our analysis.</p>
+
+								<div class="output_wrapper">
+<div class="output">
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+--------------------------------------------------------------------------------
+Number of unique values and their corresponding features
+--------------------------------------------------------------------------------
+Number of unique values: 1472, Features: [&#39;Date&#39;]
+Number of unique values: 1, Features: [&#39;Water1&#39;]
+Number of unique values: 2, Features: [&#39;Station&#39;, &#39;Depth&#39;]
+Number of unique values: 4, Features: [&#39;SnowFall&#39;]
+Number of unique values: 102, Features: [&#39;SeaLevel&#39;]
+Number of unique values: 168, Features: [&#39;PrecipTotal&#39;]
+Number of unique values: 42, Features: [&#39;Depart&#39;]
+Number of unique values: 98, Features: [&#39;CodeSum&#39;]
+Number of unique values: 48, Features: [&#39;WetBulb&#39;]
+Number of unique values: 104, Features: [&#39;StnPressure&#39;]
+Number of unique values: 178, Features: [&#39;AvgSpeed&#39;]
+Number of unique values: 54, Features: [&#39;Tmin&#39;, &#39;DewPoint&#39;]
+Number of unique values: 119, Features: [&#39;Sunset&#39;]
+Number of unique values: 36, Features: [&#39;ResultDir&#39;]
+Number of unique values: 122, Features: [&#39;Sunrise&#39;]
+Number of unique values: 63, Features: [&#39;Tmax&#39;]
+Number of unique values: 60, Features: [&#39;Tavg&#39;]
+Number of unique values: 190, Features: [&#39;ResultSpeed&#39;]
+Number of unique values: 31, Features: [&#39;Heat&#39;, &#39;Cool&#39;]
+**********          Conclusion for one to one correspondence          **********
+Features [&#39;Station&#39;, &#39;Depth&#39;] have 2 unique values
+which are one to one correspondence.
+</pre>
+</div>
+</div>
+</div>
+</div>
+<p>The following demonstrates the <a href="https://github.com/JQGoh/jqlearning/blob/master/PreprocessingData/tests/one2one_sets.py" target="_new">example code</a> of using one2one_sets() function inspecting the one to one correspondence of our data, as shown in this post.</p>
+
+<div class="jupyter">
+  <div tabindex="-1" id="notebook" class="border-box-sizing">
+    <div class="container" id="notebook-container">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot; train.csv and weather.csv files downloaded from</span>
+<span class="sd">https://www.kaggle.com/c/predict-west-nile-virus/data &quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;../bin/&quot;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">data</span> <span class="k">import</span> <span class="n">DataIn</span>
+<span class="c1"># from preprocess import one2one</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">train</span> <span class="o">=</span> <span class="n">DataIn</span><span class="p">(</span><span class="s2">&quot;train.csv&quot;</span><span class="p">)</span>
+    <span class="n">train</span><span class="o">.</span><span class="n">one2one_sets</span><span class="p">()</span>
+
+    <span class="n">corrupted</span> <span class="o">=</span> <span class="n">DataIn</span><span class="p">(</span><span class="s2">&quot;train-corrupted.csv&quot;</span><span class="p">)</span>
+    <span class="n">corrupted</span><span class="o">.</span><span class="n">one2one_sets</span><span class="p">()</span>
+
+    <span class="n">weather</span> <span class="o">=</span> <span class="n">DataIn</span><span class="p">(</span><span class="s2">&quot;weather.csv&quot;</span><span class="p">)</span>
+    <span class="n">weather</span><span class="o">.</span><span class="n">one2one_sets</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+    </div>
+  </div>
+</div>
+
 
 
 								<footer>

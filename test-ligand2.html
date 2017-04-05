@@ -11,6 +11,26 @@
 		<!-- For Jmol visualisation -->
 		<script type="text/javascript" src="JSmol.min.js"></script>
 		<script type="text/javascript"> 
+function loadjmol(file){
+	jmolfile = "load ";
+	var jmolfile = "load ".concat(file);
+	Info = {
+	width: 300,
+	height: 300,
+	debug: false,
+	j2sPath: "j2s",
+	color: "white",
+  disableJ2SLoadMonitor: true,
+  disableInitialConsole: true,
+	addSelectionOptions: false,
+	serverURL: "http://chemapps.stolaf.edu/jmol/jsmol/php/jsmol.php",
+	use: "HTML5",
+	readyFunction: null,
+	script: jmolfile
+	}
+        return Info;
+}
+
 $(document).ready(function(){
 
 Info = {
@@ -26,25 +46,15 @@ Info = {
 	use: "HTML5",
 	readyFunction: null,
 	script: "load images/ligand/Au13.xyz"
-        }
-
-Info2 = {
-	width: 300,
-	height: 300,
-	debug: false,
-	j2sPath: "j2s",
-	color: "white",
-        disableJ2SLoadMonitor: true,
-        disableInitialConsole: true,
-	addSelectionOptions: false,
-	serverURL: "http://chemapps.stolaf.edu/jmol/jsmol/php/jsmol.php",
-	use: "HTML5",
-	readyFunction: null,
-	script: "load images/ligand/Cu55.xyz"
 	}
 
-$("#mydiv").html(Jmol.getAppletHtml("jmolApplet1",Info))
-$("#Cu55").html(Jmol.getAppletHtml("jmolApplet0", Info2))
+$("#mydiv").html(Jmol.getAppletHtml("jmolApplet0", Info))
+$("#Cu55").html(Jmol.getAppletHtml("jmolApplet1", loadjmol("images/ligand/Cu55.xyz")))
+
+$("#btns").html(
+	Jmol.jmolButton(jmolApplet0, "spin on","spin ON")
+ +Jmol.jmolButton(jmolApplet0, "spin off","spin OFF")
+ )	
 
 });
 </script>
@@ -144,7 +154,7 @@ $("#Cu55").html(Jmol.getAppletHtml("jmolApplet0", Info2))
 										<time class="published" datetime="2017-04-05">Revised: April 5, 2017</time>
 									</div>
 								</header>
-								<span id=mydiv></span>
+         <span id=mydiv></span>
 	 <center>
          <span id=Cu55></span>
 	 </center>

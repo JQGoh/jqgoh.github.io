@@ -4,7 +4,7 @@ function _setWindowState() {
 # width 508;
 # height 507;
   stateVersion = 1410000;
-  background [x000000];
+  background [xffffff];
   axis1Color = "[xff0000]";
   axis2Color = "[x008000]";
   axis3Color = "[x0000ff]";
@@ -69,7 +69,7 @@ function _setParameterState() {
    set defaultdrawarrowscale 0.5;
    set defaultlabelpdb "%m%r";
    set defaultlabelxyz "%a";
-   set defaultlattice "{0 0 0}";
+   set defaultlattice "{0.0 0.0 0.0}";
    set defaultloadfilter "";
    set defaultloadscript "";
    set defaulttorsionlabel "%VALUE %UNITS";
@@ -96,6 +96,7 @@ function _setParameterState() {
   set cartoonfancy false;
   set cartoonladders false;
   set cartoonrockets false;
+  set cartoonsfancy false;
   set chaincasesensitive false;
   set dataseparator "~~~";
   set defaultstructuredssp true;
@@ -199,7 +200,7 @@ function _setParameterState() {
   set solventproberadius 1.2;
   set ssbondsbackbone false;
   set starwidth 0.05;
-  set stereodegrees -5;
+  set stereodegrees -5.0;
   set strandcountformeshribbon 7;
   set strandcountforstrands 5;
   set strutdefaultradius 0.3;
@@ -226,6 +227,17 @@ function _setParameterState() {
 
 function _setModelState() {
 
+  select ({13 14 24 25 35 36 46 47 57 58 68 69});
+  Spacefill 0.414;
+  select ({16 20 27 31 38 42 49 53 60 64 71 75});
+  Spacefill 0.391;
+  select ({0:12 15 26 37 48 59 70});
+  Spacefill 0.4825;
+  select ({17:19 21:23 28:30 32:34 39:41 43:45 50:52 54:56 61:63 65:67 72:74 76:78});
+  Spacefill 0.253;
+  select BONDS ({0:126});
+  wireframe 0.15;
+
 
   frank on;
   font frank 16.0 SansSerif Plain;
@@ -245,7 +257,7 @@ function _setPerspectiveState() {
 moveto /* time, axisAngle */ 1.0 { -273 959 -76 155.09} /* zoom, translation */  100.0 0.0 0.0  /* center, rotationRadius */ {2.4629774 2.5923874 2.2550433} 8.376359 /* navigation center, translation, depth */ {0 0 0} 0 0 0 /* cameraDepth, cameraX, cameraY */  3.0 0.0 0.0;
 #OR
 #Follows Z-Y-Z convention for Euler angles
-reset;center {2.4629774 2.5923874 2.2550433}; rotate z -34.85; rotate y 153.64; rotate z -3.04;  moveto 0.0 { -273 959 -76 155.09} 100.0 0.0 0.0 {2.4629774 2.5923874 2.2550433} 8.376359 {0 0 0} 0 0 0 3.0 0.0 0.0;;
+reset;center {2.4629774 2.5923874 2.2550433}; rotate z -34.88; rotate y 153.63; rotate z -3.1;  moveto 0.0 { -273 959 -76 155.09} 100.0 0.0 0.0 {2.4629774 2.5923874 2.2550433} 8.376359 {0 0 0} 0 0 0 3.0 0.0 0.0;;
   slab 100;depth 0;
   set slabRange 0.0;
   set spinX 0; set spinY 30; set spinZ 0; set spinFps 30;  set navX 0; set navY 0; set navZ 0; set navFps 10;

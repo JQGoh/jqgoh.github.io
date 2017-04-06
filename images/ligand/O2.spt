@@ -57,7 +57,26 @@ function _setFileState() {
   set percentVdwAtom 23;
   set smallMoleculeMaxAtoms 40000;
   set smartAromatic true;
-  load /*file*/"./Au25SR18.xyz";
+  load /*file*/"./Cu55-O2.xyz";
+
+}
+
+function _setDefinedState() {
+
+  connect  ({55}) ({56}) delete;;
+  connect  ({58}) ({57}) delete;;
+  connect  ({22}) ({55}) delete;;
+  connect  ({28}) ({58}) delete;;
+  connect  ({31}) ({57}) delete;;
+  connect  ({49}) ({56}) delete;;
+  connect  ({49}) ({55}) delete;;
+  connect  ({52}) ({58}) delete;;
+  connect  ({52}) ({57}) delete;;
+  connect  ({55}) ({51}) delete;;
+  connect  ({56}) ({51}) delete;;
+  connect  ({56}) ({52}) delete;;
+  connect  ({57}) ({27}) delete;;
+  connect  ({58}) ({27}) delete;;
 
 }
 
@@ -69,7 +88,7 @@ function _setParameterState() {
    set defaultdrawarrowscale 0.5;
    set defaultlabelpdb "%m%r";
    set defaultlabelxyz "%a";
-   set defaultlattice "{0.0 0.0 0.0}";
+   set defaultlattice "{0 0 0}";
    set defaultloadfilter "";
    set defaultloadscript "";
    set defaulttorsionlabel "%VALUE %UNITS";
@@ -96,7 +115,6 @@ function _setParameterState() {
   set cartoonfancy false;
   set cartoonladders false;
   set cartoonrockets false;
-  set cartoonsfancy false;
   set chaincasesensitive false;
   set dataseparator "~~~";
   set defaultstructuredssp true;
@@ -200,7 +218,7 @@ function _setParameterState() {
   set solventproberadius 1.2;
   set ssbondsbackbone false;
   set starwidth 0.05;
-  set stereodegrees -5.0;
+  set stereodegrees -5;
   set strandcountformeshribbon 7;
   set strandcountforstrands 5;
   set strutdefaultradius 0.3;
@@ -226,19 +244,11 @@ function _setParameterState() {
 }
 
 function _setModelState() {
-
-  select ({187:348});
-  Spacefill 0.2525;
-  select ({25:42});
-  Spacefill 0.414;
-  select ({43:186});
-  Spacefill 0.391;
-  select ({0:5 10 13:17 22});
-  color atoms opaque [xd3d3d3];
-  select ({0:24});
-  Spacefill 0.4825;
-  select BONDS ({0:437});
-  wireframe 0.15;
+data "connect_atoms"
+55	56	1	0.3	0.0	single;
+56	58	1	0.3	0.0	single;
+57	58	1	0.3	0.0	single;
+end "connect_atoms";
 
 
   frank on;
@@ -254,19 +264,20 @@ function _setPerspectiveState() {
   set perspectiveDepth true;
   set visualRange 5.0;
   set cameraDepth 3.0;
-  boundbox corners {3.3898468 2.5974998 1.9186916} {22.011885 22.804152 23.481081} # volume = 8113.6904;
-  center {12.700866 12.700826 12.699886};
-moveto /* time, axisAngle */ 1.0 { 29 972 233 58.59} /* zoom, translation */  100.0 0.0 0.0  /* center, rotationRadius */ {12.700866 12.700826 12.699886} 13.946375 /* navigation center, translation, depth */ {0 0 0} 0 0 0 /* cameraDepth, cameraX, cameraY */  3.0 0.0 0.0;
+  boundbox corners {5.4237127 5.8922205 5.284031} {14.576339 14.107947 14.715965} # volume = 709.2388;
+  center {7.1725054 11.283456 14.458681};
+moveto /* time, axisAngle */ 1.0 { -834 27 -551 59.13} /* zoom, translation */  155.13 0.0 0.0  /* center, rotationRadius */ {7.1725054 11.283456 14.458681} 7.3142576 /* navigation center, translation, depth */ {0 0 0} 0 0 0 /* cameraDepth, cameraX, cameraY */  3.0 0.0 0.0;
 #OR
 #Follows Z-Y-Z convention for Euler angles
-reset;center {12.700866 12.700826 12.699886}; rotate z 9.16; rotate y 56.83; rotate z 5.74;  moveto 0.0 { 29 972 233 58.59} 100.0 0.0 0.0 {12.700866 12.700826 12.699886} 13.946375 {0 0 0} 0 0 0 3.0 0.0 0.0;;
+reset;center {7.1725054 11.283456 14.458681}; rotate z -105.49; rotate y 48.65; rotate z 70.8; zoom 155.13;  moveto 0.0 { -834 27 -551 59.13} 155.13 0.0 0.0 {7.1725054 11.283456 14.458681} 7.3142576 {0 0 0} 0 0 0 3.0 0.0 0.0;;
   slab 100;depth 0;
   set slabRange 0.0;
   set spinX 0; set spinY 30; set spinZ 0; set spinFps 30;  set navX 0; set navY 0; set navZ 0; set navFps 10;
 }
 
 function _setSelectionState() {
-  select ({0:5 10 13:17 22});
+  hide ({0:20 23:30 32:48 50 53 54 57 58});
+  select ({0:20 23:30 32:48 50 53:58});
   set hideNotSelected false;
 }
 
@@ -275,6 +286,7 @@ function _setState() {
   set refreshing false;
   _setWindowState;
   _setFileState;
+  _setDefinedState;
   _setParameterState;
   _setModelState;
   _setPerspectiveState;

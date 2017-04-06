@@ -1,8 +1,8 @@
 # Jmol state version 14.10.0  2017-03-25 18:38;
 
 function _setWindowState() {
-# width 508;
-# height 507;
+# width 547;
+# height 562;
   stateVersion = 1410000;
   background [xffffff];
   axis1Color = "[xff0000]";
@@ -57,7 +57,7 @@ function _setFileState() {
   set percentVdwAtom 23;
   set smallMoleculeMaxAtoms 40000;
   set smartAromatic true;
-  load /*file*/"./Au25SR18.xyz";
+  load /*file*/"./Cu55.xyz";
 
 }
 
@@ -69,7 +69,7 @@ function _setParameterState() {
    set defaultdrawarrowscale 0.5;
    set defaultlabelpdb "%m%r";
    set defaultlabelxyz "%a";
-   set defaultlattice "{0.0 0.0 0.0}";
+   set defaultlattice "{0 0 0}";
    set defaultloadfilter "";
    set defaultloadscript "";
    set defaulttorsionlabel "%VALUE %UNITS";
@@ -96,7 +96,6 @@ function _setParameterState() {
   set cartoonfancy false;
   set cartoonladders false;
   set cartoonrockets false;
-  set cartoonsfancy false;
   set chaincasesensitive false;
   set dataseparator "~~~";
   set defaultstructuredssp true;
@@ -200,7 +199,7 @@ function _setParameterState() {
   set solventproberadius 1.2;
   set ssbondsbackbone false;
   set starwidth 0.05;
-  set stereodegrees -5.0;
+  set stereodegrees -5;
   set strandcountformeshribbon 7;
   set strandcountforstrands 5;
   set strutdefaultradius 0.3;
@@ -227,19 +226,11 @@ function _setParameterState() {
 
 function _setModelState() {
 
-  select ({187:348});
-  Spacefill 0.2525;
-  select ({25:42});
-  Spacefill 0.414;
-  select ({43:186});
-  Spacefill 0.391;
-  select ({0:5 10 13:17 22});
-  color atoms opaque [xd3d3d3];
-  select ({0:24});
-  Spacefill 0.4825;
-  select BONDS ({0:437});
-  wireframe 0.15;
+  measures delete;
+  select *; set measures nanometers;
+  font measures 15.0 SansSerif Plain;
 
+  hover "%U";
 
   frank on;
   font frank 16.0 SansSerif Plain;
@@ -254,19 +245,20 @@ function _setPerspectiveState() {
   set perspectiveDepth true;
   set visualRange 5.0;
   set cameraDepth 3.0;
-  boundbox corners {3.3898468 2.5974998 1.9186916} {22.011885 22.804152 23.481081} # volume = 8113.6904;
-  center {12.700866 12.700826 12.699886};
-moveto /* time, axisAngle */ 1.0 { 29 972 233 58.59} /* zoom, translation */  100.0 0.0 0.0  /* center, rotationRadius */ {12.700866 12.700826 12.699886} 13.946375 /* navigation center, translation, depth */ {0 0 0} 0 0 0 /* cameraDepth, cameraX, cameraY */  3.0 0.0 0.0;
+  boundbox corners {5.4237127 5.8922205 5.284031} {14.576339 14.107947 14.715965} # volume = 709.2388;
+  center {13.74354 8.045992 9.684376};
+moveto /* time, axisAngle */ 1.0 { -414 -211 886 122.16} /* zoom, translation */  116.72 0.0 0.0  /* center, rotationRadius */ {13.74354 8.045992 9.684376} 6.243101 /* navigation center, translation, depth */ {0 0 0} 0 0 0 /* cameraDepth, cameraX, cameraY */  3.0 0.0 0.0;
 #OR
 #Follows Z-Y-Z convention for Euler angles
-reset;center {12.700866 12.700826 12.699886}; rotate z 9.16; rotate y 56.83; rotate z 5.74;  moveto 0.0 { 29 972 233 58.59} 100.0 0.0 0.0 {12.700866 12.700826 12.699886} 13.946375 {0 0 0} 0 0 0 3.0 0.0 0.0;;
+reset;center {13.74354 8.045992 9.684376}; rotate z -58.98; rotate y 47.96; rotate z 175.06; zoom 116.72;  moveto 0.0 { -414 -211 886 122.16} 116.72 0.0 0.0 {13.74354 8.045992 9.684376} 6.243101 {0 0 0} 0 0 0 3.0 0.0 0.0;;
   slab 100;depth 0;
   set slabRange 0.0;
   set spinX 0; set spinY 30; set spinZ 0; set spinFps 30;  set navX 0; set navY 0; set navZ 0; set navFps 10;
 }
 
 function _setSelectionState() {
-  select ({0:5 10 13:17 22});
+  hide ({1:13 15 17:19 21:29 31:37 39 40 42:54});
+  select ({0:54});
   set hideNotSelected false;
 }
 

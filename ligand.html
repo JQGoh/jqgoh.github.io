@@ -171,16 +171,16 @@ $("#btns").html(
 								<ol>
 									<li>Determine the surface atoms of a given cluster.</li>
 									<li>Select few surface atoms as the reference points for ligand. The selected atoms define the 'flat surface' that we place our ligand on top.</li>
-									<li> Based on the atomic positions of a ligand defined with respect to the 'flat surface', performs appropriate rotations and translations to place the ligand on top of the selected surface.</li>
+									<li> Based on the atomic positions of a ligand defined with respect to the 'flat surface', perform appropriate rotations and translations to place the ligand on top of the selected surface.</li>
 								</ol>	
 								</p> 
 
 								<h2>Step 1: Determine the surface atoms of a cluster</h2>
 								<p>
-							        It could be straightforward to refer the total number of nearest neighbor atoms (coordination number) for this purpose. For example, in body-centered cubic crystal, the bulk atoms are surrounded by 8 nearest neighbor atoms, so the surface atoms will have coordination number less than 8. However, this can not not be a definite rule for nanosized cluster because ligands can be arranged in different orientations surrounding the cluster core. The flexible arrangements make some non-surface atoms having different coordination numbers. 
+							        It could be straightforward to check the total number of nearest neighbor atoms (coordination number) of an atom for this purpose. For example, in body-centered cubic crystal, the bulk atoms are surrounded by 8 nearest neighbor atoms, so the surface atoms will have coordination number less than 8. However, this can not be a definite rule for nanosized cluster because ligands can be arranged in different orientations surrounding the cluster core. The flexible arrangements let some non-surface atoms having different coordination numbers, and we hardly choose a coordination number as the cutoff. 
 								</p>
 								<p>
-								Instead of checking the atomic coordination numbers, we refer to a number of points on a spherical surface (defined with respect to each atomic position). The program will check the proportion of the points overlapped by the other atoms. Assuming that 95% of these points lie wihthin the spherical regions of the neighboring atoms, there is a very high chance this particular atom is not a surface atom. Depending on user's preference <a href="https://github.com/JQGoh/LigandsOnCluster/blob/master/bin/surfaceatom.py#L130" target="_new">get_surf_atoms()</a> function can generate more/less points by manipulating the azimuth/polar angle intervals (<i>dphi</i>/<i>dtheta</i> parameters), and the sizes (<i>radii</i>) of spherical regions belong to each atomic element.
+								Instead of atomic coordination numbers, we can refer to a number of points on a spherical surface (defined with respect to each atomic position). The program will check the proportion of points overlapped by the other atoms. Assuming that 95% of these points lie wihthin the spherical regions of the neighboring atoms, there is a high chance this particular atom is not a surface atom. Depending on user's preference <a href="https://github.com/JQGoh/LigandsOnCluster/blob/master/bin/surfaceatom.py#L130" target="_new">get_surf_atoms()</a> function can generate more/less points by manipulating the azimuth/polar angle intervals (<i>dphi</i>/<i>dtheta</i> parameters), and the sizes (<i>radii</i>) of spherical regions belong to each atomic element.
 								</p>
 								<center>
 								<span id=points></span>
@@ -193,7 +193,7 @@ $("#btns").html(
 								<h2> Step 2: Surface atoms spanning the flat surface
 								</h2>
 								<p>
-								This step aims to define the reference axes, or the 'flat surface' spanned by the selected surface atoms. An option is to define a 'flat surface' by selecting three surface atoms. Referring to Cu<sub>55</sub> icosahedral cluster as an example, Figure 4 shows that we can specify the atoms A and B as the x-axis of a 'flat surface'. Position of atom A is the origin (0, 0, 0) of the flat surface, and atom B positioned at (rx, 0, 0), where rx is the distance between the atoms. Vectors AB (connecting atoms A and B) and AC can genereate a vector perpendiculr to the spanned surface by cross product operation. Together with the vector AB, this perpendicular vector defines the xz-plane, the three surface atoms define the xy-plane of our chosen surface for the Cu<sub>55</sub> cluster.
+								This step aims to define the reference axes, or the 'flat surface' spanned by the selected surface atoms. An option is to define a 'flat surface' by selecting three surface atoms. Referring to Cu<sub>55</sub> icosahedral cluster as an example, Figure 4 shows that we can specify the atoms A and B as the x-axis of a 'flat surface'. Position of atom A is the origin (0, 0, 0) of the flat surface, and atom B is positioned at (rx, 0, 0) with rx as the distance between the atoms. Vectors AB (connecting atoms A and B) and AC can genereate a vector perpendiculr to the spanned surface by cross product operation. Together with the vector AB, this perpendicular vector defines the xz-plane, and the three surface atoms define the xy-plane of our chosen surface for the Cu<sub>55</sub> cluster.
 
 								</p>
 								<img src="images/ligand/flat-ref.png" alt="axes-reference" width="400" height="400" />								
@@ -201,7 +201,7 @@ $("#btns").html(
 									Figure 4: xy-plane of the selected Cu<sub>55</sub> icosahedral cluster surface.<br><br>
 								</center>
 								<p>
-								Other than choosing a third atom, like the atom C in Figure 4, we can use the center point of our cluster to define the xz-plane instead. Figure 5 shows that how we refer to the center point of the Cu<sub>55</sub> icosahedron as a reference. Notice that the xz-plane will not be perpendicular intersected to the surface xy-plane spanne by the atoms A, B, C in Figure 4. The <a href="https://github.com/JQGoh/LigandsOnCluster/blob/master/bin/surfaceatom.py#L564" target="_new">add_ligand()</a> function offers this feature such that we can specify the two atoms (<i>sites</i>) defining the x-axis, and use the default option None for <i>plane_atom</i> parameter. If we want to define the xy-plane as shown in Figure 4, we can specify the index of atom C to <i>plane_atom</i>. The flexibility of this choise is to allow users having different orientations in their designed ligands. 
+								Instead of defining the xy-plane as shown in Figure 4, we can use the center point of our cluster to define the xz-plane, and thus the xy-plane can be defined acoordingly. Figure 5 illustrates this alternative way of defining a surface. Notice that the xz-plane will not be perpendicular intersected to the surface xy-plane spanned by the atoms A, B, C in Figure 4. The <a href="https://github.com/JQGoh/LigandsOnCluster/blob/master/bin/surfaceatom.py#L564" target="_new">add_ligand()</a> function offers this feature such that we can specify the indices of atoms A, B (<i>sites</i>) for defining the x-axis, and use the default option None for <i>plane_atom</i> parameter. If we want to define the xy-plane as shown in Figure 4, we can specify the index of atom C to <i>plane_atom</i>. The flexibility of this choise is to allow users having different orientations in their designed ligands. 
 								</p>
 								<img src="images/ligand/com-xzplane.png" alt="com-xzplane" width="400" height="400" />								
 								<center>
@@ -209,16 +209,16 @@ $("#btns").html(
 								</center>
 								<h2>Step 3: Placing a ligand on top of a surface</h2>
 								<p>
-								Our next task is to specify the atomic positions of our ligand to the <i>ligand</i> parameter of add_ligand() function. The add_ligand() function will first translate the whole cluster to have atom A positioned at (0, 0, 0). It will then perform rotation to align atoms A and B along the positive x-axis. Lastly, it will rotate the cluster such that it follows the xz-plane defined by <i>plane_atom</i>. After these operations, we can add our desired ligand to the cluster, and finally this add_ligand() function will complete the reversed rotation and translation operations. Figure 6 demonstrates how we can define the atomic positions of an oxygen molecule with respect to the icosahedral surface of Cu<sub>55</sub> cluster.
+								Our next task is to specify the atomic positions of our ligand to the <i>ligand</i> parameter of add_ligand() function. The add_ligand() function will first translate the whole cluster to have atom A positioned at (0, 0, 0). It will then perform rotation to align atoms A and B along the positive x-axis. Lastly, it will rotate the cluster such that it follows the xz-plane defined by <i>plane_atom</i>. After these operations, we include the atomic positions of desired ligand to the cluster, and finally this add_ligand() function will complete the reversed rotation and translation operations. This will complete the process of attaching a ligand to the chosen surface. Figure 6 demonstrates how we can define the atomic positions of an oxygen molecule with respect to the icosahedral surface of Cu<sub>55</sub> cluster.
 								</p>
 								<img src="images/ligand/O2.png" alt="O2" width="400" height="250" />								
 								<center>
 									Figure 6: Desired atomic positions of oxygen molecule, with respect to the chosen 'flat surface'.<br><br>
 								</center>
-								<h2> Example 1: Attach oxygen molecules to Cu<sub>55</sub> cluster surface interactively
+								<h2> Example 1: Attach oxygen molecules to Cu<sub>55</sub> cluster interactively
 								</h2>
 								<p>
-								The <a href="https://github.com/JQGoh/LigandsOnCluster/blob/master/tests/Cu55/main.py" target="_new">example code</a> available on my Github page presents a general example of attaching ligands interactively. I designed a helper function <a href="https://github.com/JQGoh/LigandsOnCluster/blob/master/bin/surfaceatom.py#L749" target="_new">add_interactive()</a> in prompting the user to indicate the selected surface atoms (surface) they wish to attach the ligand to. add_interactive() will generate a graphical user interface based on the ASE package, showing the imported cluster. The function will suggest the following options to the user:
+								This <a href="https://github.com/JQGoh/LigandsOnCluster/blob/master/tests/Cu55/main.py" target="_new">example code</a> available on my Github page presents a general example of attaching ligands interactively. I designed a helper function <a href="https://github.com/JQGoh/LigandsOnCluster/blob/master/bin/surfaceatom.py#L749" target="_new">add_interactive()</a> in prompting the user to indicate the selected surface atoms (surface) they wish to attach the ligand to. add_interactive() will generate a graphical user interface based on the ASE package, showing the imported cluster. The function will then suggest the following options for the user:
 								</p>
 								<blockquote>
 								Please choose one of the following actions.<br>
@@ -229,11 +229,19 @@ $("#btns").html(
 								</blockquote>
 
 								<p>
-								Based on the graphical interface, we can learn about the atomic indices of surface atoms we want to choose. This add_interactive() function only supports the case using three atoms to define the surface (Figure 4). Let us pick the option 1 and specify the three indices for the first surface: 22 31 21. This defines <i>sites</i> as [22, 31], <i>plane_atom</i> as 21. <b>Note that the atomic indices specified by the Python ASE program is different from the atomic indices specified by JSmol, because of the difference in the starting indices (Python=0, JSmol=1).</b> Once we complete this step, the program will display our progress by displaying a window named as "ase-temp.xyz". We can keep track whether our ligand is attarched properly. If we make a mistake, we can choose the option 2 and provide the atomic index of ligand that we want to remove. Let us continue to add the second oxygen molecule with <i>sites</i>=[31, 13], <i>plane_atom</i>=21. The following demonstrates the end result of attaching two oxygen molecules to the Cu<sub>55</sub> cluster
+								Based on the graphical interface, we can learn about the atomic indices of surface atoms we want to choose, as shown below.
+								</p>	
+								<img src="images/ligand/Index22.png" alt="O2" width="400" height="400" />								
+								<center>
+									Figure 7: ASE graphical user interface showing the chosen atomic index 22 of Cu<sub>55</sub> cluster. <br><br>
+								</center>
+
+								<p>
+								This add_interactive() function only supports the case of using three atoms to define the surface (Figure 4). Let us pick the option 1 and specify the three indices for the first surface: 22 31 21. This defines <i>sites</i> as [22, 31], <i>plane_atom</i> as 21. <b>Note that the atomic indices specified by the Python ASE program is different from the atomic indices specified by JSmol, because of the difference in the starting indices (Python=0, JSmol=1).</b> Once we complete this step, the program will display our progress in a window named as "ase-temp.xyz". We can keep track whether our ligand is attached properly. If we make a mistake, we can choose the option 2 and to remove the undeired ligand. Let us continue to add the second oxygen molecule with <i>sites</i>=[31, 13], <i>plane_atom</i>=21. The following demonstrates the end result of attaching two oxygen molecules to the Cu<sub>55</sub> cluster
 								</p>
 								<center>
 								<span id=Cu55O2></span>
-								Figure 7: Two oxygen molecules attached to a Cu<sub>55</sub> icosahedral cluster.<br><br>
+								Figure 8: Two oxygen molecules attached to a Cu<sub>55</sub> icosahedral cluster.<br><br>
 								</center>
 								<h2> Example 2: Attach RS-Au-SR ligand to Au<sub>13</sub> cluster
 								</h2>
@@ -241,17 +249,17 @@ $("#btns").html(
 								</p>
 								<img src="images/ligand/RSAuSR.png" alt="O2" width="400" height="400" />								
 								<center>
-									Figure 8: Ligand of CH<sub>3</sub>S-Au-SCH<sub>3</sub>.<br><br>
+									Figure 9: Ligand CH<sub>3</sub>S-Au-SCH<sub>3</sub>.<br><br>
 								</center>
 								<p>
 								The automation process assumes that this ligand is attached to only two surface atoms which are second nearest neighbor to each other (this agrees with the experimental obervation as well). For a simple demonstration, let us pick the Au<sub>13</sub> icosahedron (Figure 1) as our cluster core. The <a href="https://github.com/JQGoh/LigandsOnCluster/blob/master/bin/surfaceatom.py#L424" target="_new">add_monomer()</a> function and <a href="https://github.com/JQGoh/LigandsOnCluster/blob/master/bin/surfaceatom.py#L15" target="_new">monomer()</a> class are designed to generate this type of ligand. monomer() class basically contains the parameters specifying the properties of the monomer ligand. add_monomer() will first let the S-Au-S atoms placed along the xz-plane defined by <i>sites</i>. But having an angle parameter <i>delta</i> defined in monomer class will then displace S-Au-S slightly with respect to the xz-plane. The purpose of having this is to generate ligands of different orientations, as the starting points. We can also define the desired side group (parameter <i>side-group</i>), but we stick with methyl side group (R=CH<sub>3</sub>) in this example. <i>ref_neighbor</i> parameter specifies whether we will prefer using the common neighbor of the two atoms in defining the 'flat surface', or we refer to the center of point instead (Figure 5). In this example, <i>ref_neighor</i>=0 works better to have ligands properly aligned to the surfaces.
 </p>
 <p>
-Lastly, we use <a href="https://github.com/JQGoh/LigandsOnCluster/blob/master/bin/surfaceatom.py#L334" target="_new">create_monomers()</a> by randomly picking two surface atoms which are second nearest neighbor to each other for the ligand attachment. The program will automatically generate the thiolate monomer, and for the cases where the generated monomers overlap with the neighboring atoms, it will then restart the generation process. User can define how many attempts should be made in the <i>tries</i> parameter. The automation process does not guarantee to generate perfect results with ligands attached to all the surface atoms, but the program should work in most cases. The <a href="https://github.com/JQGoh/LigandsOnCluster/blob/master/tests/Au13/main.py" target="_new">example code</a> is available, and the end result of this automation process is the following cluster.
+Lastly, we use <a href="https://github.com/JQGoh/LigandsOnCluster/blob/master/bin/surfaceatom.py#L334" target="_new">create_monomers()</a> by randomly picking two surface atoms which are second nearest neighbor to each other for the ligand attachment. The program will automatically generate the thiolate monomer, if the generated monomer does not overlap with the neighboring atoms. Or else, the generation process will restart until this process reaches the maximum number of attemps. User can define the maximum number of attempts should be made in the <i>tries</i> parameter. The automation process does not guarantee a perfect results with six monomers attached to all the surface atoms, but the program should work in most cases. The <a href="https://github.com/JQGoh/LigandsOnCluster/blob/master/tests/Au13/main.py" target="_new">example code</a> is available, and the end result of this automation process is the following cluster.
 </p>
 								<center>
 								<span id=Au13Ligands></span>
-								Figure 9: Cluster with six CH<sub>3</sub>S-Au-SCH<sub>3</sub> automatically attached to Au<sub>13</sub> icosahedral core. 
+								Figure 10: Cluster with six CH<sub>3</sub>S-Au-SCH<sub>3</sub> automatically attached to an Au<sub>13</sub> icosahedral core. 
 								</center>
 
 								<footer>
